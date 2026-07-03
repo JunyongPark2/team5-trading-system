@@ -26,4 +26,6 @@ class AutoTradingSystem:
             time.sleep(0.2)
 
         if price[0] < price[1] and price[1] < price[2]:
-            self.buy(stock_code, price[2], seed_money // price[2])
+            quantity = seed_money // price[2]
+            if quantity > 0:
+                self.buy(stock_code, price[2], seed_money // price[2])
