@@ -105,6 +105,24 @@ def test_buy_nice_timing_does_not_buy_when_price_is_not_rising(
     driver.buy.assert_not_called()
 
 
+def test_buy_nice_timing_does_not_buy_when_quantity_is_zero(
+        mocker: MockerFixture,
+):
+    driver = create_driver(mocker)
+    driver.get_price.side_effect = [1000, 1100, 1200]
+    system = create_system()
+
+    system.select_stock_broker(driver)
+    system.buy_nice_timing("123", 1000)
+
+    assert driver.get_price.call_args_list == [
+        call("123"),
+        call("123"),
+        call("123"),
+    ]
+    driver.buy.assert_not_called()
+
+
 def test_sell_nice_timing_sells_count_when_price_is_falling(
         mocker: MockerFixture,
 ):
