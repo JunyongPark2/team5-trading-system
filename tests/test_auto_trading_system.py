@@ -1,3 +1,5 @@
+from unittest.mock import call
+
 from pytest_mock import MockerFixture
 
 from auto_trading_system import AutoTradingSystem
@@ -65,3 +67,75 @@ def test_get_price_returns_selected_stock_broker_price(mocker: MockerFixture):
 
     assert price == 700
     driver.get_price.assert_called_once_with("789")
+
+
+def test_buy_nice_timing_buys_max_count_when_price_is_rising(
+        mocker: MockerFixture,
+):
+    driver = create_driver(mocker)
+    driver.get_price.side_effect = [1000, 1100, 1200]
+    system = create_system()
+
+    system.select_stock_broker(driver)
+    system.buy_nice_timing("123", 5000)
+
+    assert driver.get_price.call_args_list == [
+        call("123"),
+        call("123"),
+        call("123"),
+    ]
+    driver.buy.assert_called_once_with("123", 1200, 4)
+
+
+def test_buy_nice_timing_does_not_buy_when_price_is_not_rising(
+        mocker: MockerFixture,
+):
+    driver = create_driver(mocker)
+    driver.get_price.side_effect = [1000, 1200, 1100]
+    system = create_system()
+
+    system.select_stock_broker(driver)
+    system.buy_nice_timing("456", 5000)
+
+    assert driver.get_price.call_args_list == [
+        call("456"),
+        call("456"),
+        call("456"),
+    ]
+    driver.buy.assert_not_called()
+
+
+def test_sell_nice_timing_sells_count_when_price_is_falling(
+        mocker: MockerFixture,
+):
+    driver = create_driver(mocker)
+    driver.get_price.side_effect = [1200, 1100, 1000]
+    system = create_system()
+
+    system.select_stock_broker(driver)
+    system.sell_nice_timing("123", 7)
+
+    assert driver.get_price.call_args_list == [
+        call("123"),
+        call("123"),
+        call("123"),
+    ]
+    driver.sell.assert_called_once_with("123", 1000, 7)
+
+
+def test_sell_nice_timing_does_not_sell_when_price_is_not_falling(
+        mocker: MockerFixture,
+):
+    driver = create_driver(mocker)
+    driver.get_price.side_effect = [1200, 1000, 1100]
+    system = create_system()
+
+    system.select_stock_broker(driver)
+    system.sell_nice_timing("456", 7)
+
+    assert driver.get_price.call_args_list == [
+        call("456"),
+        call("456"),
+        call("456"),
+    ]
+    driver.sell.assert_not_called()
