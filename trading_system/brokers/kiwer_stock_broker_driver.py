@@ -1,5 +1,5 @@
-from kiwer_api import KiwerAPI
-from stock_broker_driver import StockBrokerDriver
+from trading_system.brokers.stock_broker_driver import StockBrokerDriver
+from trading_system.external.kiwer_api import KiwerAPI
 
 
 class KiwerStockBrokerDriver(StockBrokerDriver):

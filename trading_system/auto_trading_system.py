@@ -1,9 +1,11 @@
 import time
 
+
 class AutoTradingSystem:
     TREND_CHECK_INTERVAL_SECOND = 0.2
     TREND_CHECK_COUNT = 3
     MAX_PRICE = 9999999999
+
     def __init__(self):
         self._driver = None
 

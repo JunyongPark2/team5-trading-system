@@ -1,8 +1,8 @@
 from pytest_mock import MockerFixture
 
-from kiwer_api import KiwerAPI
-from kiwer_stock_broker_driver import KiwerStockBrokerDriver
-from stock_broker_driver import StockBrokerDriver
+from trading_system.brokers.kiwer_stock_broker_driver import KiwerStockBrokerDriver
+from trading_system.brokers.stock_broker_driver import StockBrokerDriver
+from trading_system.external.kiwer_api import KiwerAPI
 
 
 def create_driver(api):
