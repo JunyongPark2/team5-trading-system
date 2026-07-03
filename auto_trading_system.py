@@ -16,3 +16,10 @@ class AutoTradingSystem:
 
     def get_price(self, stock_code):
         return self._driver.get_price(stock_code)
+
+    def buy_nice_timing(self, param, param1):
+        price1 = self.get_price(param)
+        price2 = self.get_price(param)
+        price3 = self.get_price(param)
+        if price1 < price2 and price2 < price3:
+            self.buy(param, price3, param1 // price3)
