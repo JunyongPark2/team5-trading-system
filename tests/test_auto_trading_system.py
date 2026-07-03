@@ -2,8 +2,8 @@ from unittest.mock import call
 
 from pytest_mock import MockerFixture
 
-from auto_trading_system import AutoTradingSystem
-from stock_broker_driver import StockBrokerDriver
+from trading_system.auto_trading_system import AutoTradingSystem
+from trading_system.brokers.stock_broker_driver import StockBrokerDriver
 
 
 def create_system():

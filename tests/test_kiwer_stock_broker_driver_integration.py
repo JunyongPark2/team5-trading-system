@@ -1,7 +1,7 @@
 import pytest
 
-from kiwer_api import KiwerAPI
-from kiwer_stock_broker_driver import KiwerStockBrokerDriver
+from trading_system.brokers.kiwer_stock_broker_driver import KiwerStockBrokerDriver
+from trading_system.external.kiwer_api import KiwerAPI
 
 
 @pytest.fixture

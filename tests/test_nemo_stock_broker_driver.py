@@ -1,8 +1,8 @@
 from pytest_mock import MockerFixture
 
-from nemo_api import NemoAPI
-from nemo_stock_broker_driver import NemoStockBrokerDriver
-from stock_broker_driver import StockBrokerDriver
+from trading_system.brokers.nemo_stock_broker_driver import NemoStockBrokerDriver
+from trading_system.brokers.stock_broker_driver import StockBrokerDriver
+from trading_system.external.nemo_api import NemoAPI
 
 
 def create_driver(api):
