@@ -37,3 +37,13 @@ class AutoTradingSystem:
         if current_price := self.get_nice_price(stock_code):
             self.sell(stock_code, current_price, count)
 
+    def buy_nice_timing(self, stock_code, seed_money):
+        price = []
+        for _ in range(3):
+            price.append(self.get_price(stock_code))
+            time.sleep(0.2)
+
+        if price[0] < price[1] < price[2]:
+            quantity = seed_money // price[2]
+            if quantity > 0:
+                self.buy(stock_code, price[2], quantity)
