@@ -1,3 +1,5 @@
+import time
+
 class AutoTradingSystem:
     def __init__(self):
         self._driver = None
@@ -16,3 +18,14 @@ class AutoTradingSystem:
 
     def get_price(self, stock_code):
         return self._driver.get_price(stock_code)
+
+    def buy_nice_timing(self, stock_code, seed_money):
+        price = []
+        for _ in range(3):
+            price.append(self.get_price(stock_code))
+            time.sleep(0.2)
+
+        if price[0] < price[1] < price[2]:
+            quantity = seed_money // price[2]
+            if quantity > 0:
+                self.buy(stock_code, price[2], quantity)
