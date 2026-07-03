@@ -39,7 +39,7 @@ def test_nemo_driver_sell_delegates_to_nemo_api(mocker: MockerFixture):
     api = mocker.Mock(spec=NemoAPI)
     driver = create_driver(api)
 
-    driver.sell("789", 1100, 2)
+    driver.sell("456", 1100, 2)
 
     api.selling_stock.assert_called_once_with("456", 1100, 2)
 
