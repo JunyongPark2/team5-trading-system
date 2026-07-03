@@ -22,14 +22,18 @@ class AutoTradingSystem:
     def get_price(self, stock_code):
         return self._driver.get_price(stock_code)
 
-    def sell_nice_timing(self, stock_code, count):
+    def get_nice_price(self, stock_code):
         prev_price = AutoTradingSystem.MAX_PRICE
         current_price = 0
         for _ in range(AutoTradingSystem.TREND_CHECK_COUNT):
             current_price = self.get_price(stock_code)
             if current_price >= prev_price:
-                return
+                return 0
             prev_price = current_price
             time.sleep(AutoTradingSystem.TREND_CHECK_INTERVAL_SECOND)
-        self.sell(stock_code, current_price, count)
+        return current_price
+
+    def sell_nice_timing(self, stock_code, count):
+        if current_price := self.get_nice_price(stock_code):
+            self.sell(stock_code, current_price, count)
 
